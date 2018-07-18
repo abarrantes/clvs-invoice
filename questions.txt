@@ -1,0 +1,1 @@
+If the i add buttons with jquery, how can they be available for formula

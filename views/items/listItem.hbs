@@ -1,0 +1,27 @@
+
+<h3>
+<a href="/items/create">CREATE NEW ITEM</a>
+</h3>
+
+<div class="row">
+
+<div class="col-md-3"></div>
+<div class="col-md-2">Code</div>
+<div class="col-md-2">Name</div>
+<div class="col-md-2">Active</div>
+<div class="col-md-3"></div>
+
+</div>
+<hr>
+
+{{#each items}}
+<div class="row">
+    <hr>
+<div class="col-md-3"></div>
+<div class="col-md-2">{{this.itemCode}}</div>
+<div class="col-md-2">{{this.itemName}}</div>
+<div class="col-md-2">{{this.active}} || {{#if this.active}}<a>Inactivar</a>{{/if}}</div>
+<div class="col-md-3"></div>
+<hr>
+</div>
+{{/each}}
