@@ -24,7 +24,7 @@ const flash           = require("connect-flash");
 const User        = require ("./models/user");
 
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/clvs-invoice', {useMongoClient: true})
+mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
