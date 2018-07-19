@@ -20,8 +20,10 @@ orderRouter.get('/orders/create', (req, res, next) => {
     Order.find().sort({orderNumber:-1}).limit(1)
     .then((resultFromDB)=>{
       let nextOrderNumber = 1;
-      let maxOrderNumberInDB = Number(resultFromDB[0].orderNumber);
-      if (nextOrderNumber <= maxOrderNumberInDB) {nextOrderNumber = maxOrderNumberInDB+1};
+      if(resultFromDB>0){
+        maxOrderNumberInDB = Number(resultFromDB[0].orderNumber);
+        nextOrderNumber = maxOrderNumberInDB+1
+      }
       res.render('orders/createOrder',{nextOrderNumber});
     })
     .catch((err)=>{
