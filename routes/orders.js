@@ -19,9 +19,8 @@ orderRouter.get('/orders/create', (req, res, next) => {
 
     Order.find().sort({orderNumber:-1}).limit(1)
     .then((resultFromDB)=>{
-      console.log(resultFromDB); //todo borrar
-      let nextOrderNumber = Number(resultFromDB[0].orderNumber)+1;
-      console.log(resultFromDB[0].orderNumber);
+      let nextOrderNumber = 1;
+      if (nextOrderNumber < resultFromDB[0] ) {nextOrderNumber = Number(resultFromDB[0].orderNumber)+1};
       res.render('orders/createOrder',{nextOrderNumber});
     })
     .catch((err)=>{

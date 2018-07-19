@@ -1,3 +1,4 @@
+
 $(document).ready(() => {
 
 
@@ -8,31 +9,33 @@ $(document).ready(() => {
         return nextID;
     }
 
-    // $('button.btnAddLIne').on('click','button.btnAddLIne',function () {
-    $('button.btnAddLIne').on('click',function () {
+    $(document).on("click","button.btnAddLIne" , function() {
         calculateLineTotal();
         calculateDocTotal();
         addLineHtml(calculateNextID(), $(this));
     });
 
-    $(".btnDeleteLine").on('click',function () {
+    $(document).on("click","button.btnDeleteLine" , function() {
         deleteLineHtml($(this));
         calculateLineTotal();
         calculateDocTotal();
     });
 
+    $(document).on("blur",".calcTriger",function(){
+        calculateLineTotal();
+        calculateDocTotal();
+    })
+
     function calculateLineTotal() {
 
-        $.each($(".orderLines"), function (index, $line) {
+        $.each($(".orderLines"), function (index, line) {
 
+            let quantity = $(this).find($("input[name='itemQuantity']")).val();
+            let price = $(this).find($("input[name='itemPrice']")).val();
             
-
-            console.log($line);
-            console.log($line.val());
-
-            // $line.("input[name='lineTotal']").val(
-            //     $("input[name='itemQuantity']").val() * $("input[name='itemPrice']").val()
-            // )
+            $(this).find($("input[name='lineTotal']")).val(
+                quantity * price
+            )
         });
     }
 
@@ -41,7 +44,7 @@ $(document).ready(() => {
         let docTotal = 0;
 
         $.each($(".orderLines"), function (index, line) {
-            docTotal += Number($("input[name='lineTotal']").val());
+            docTotal += Number($(this).find($("input[name='lineTotal']")).val());
         });
 
         $("#total").val(docTotal);
@@ -72,10 +75,10 @@ $(document).ready(() => {
         <input type="text" class="form-control" id="itemName${id}" name="itemName" placeholder="itemName">
         </div>
         <div>
-        <input type="number" class="form-control" id="itemQuantity${id}" name="itemQuantity" value="0">
+        <input type="number" class="form-control calcTriger" id="itemQuantity${id}" name="itemQuantity" value="0">
         </div>
         <div>
-        <input type="number" class="form-control" id="itemPrice${id}" name="itemPrice" value="0">
+        <input type="number" class="form-control calcTriger" id="itemPrice${id}" name="itemPrice" value="0">
         </div>
         <div>
         <input type="number" class="form-control" id="lineTotal${id}" name="lineTotal" readonly="readonly" value="0">
