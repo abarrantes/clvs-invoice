@@ -7,7 +7,7 @@ const orderSchema = new Schema(
     orderNumber: {type: Number, maxlength: 10, required: true, unique: true},
     cardCode: String,
     cardName: String,
-    lines:[{itemCode: String, itemName: String, quantity: Number, price: Number, lineTotal: Number}],
+    lines:[{itemCode: String, itemName: String, itemQuantity: Number, itemPrice: Number, lineTotal: Number}],
     total: Number,
   },
   {
