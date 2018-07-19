@@ -13,4 +13,16 @@ apiRouter.get('/api/items', (req, res, next) => {
   })
 });
 
+apiRouter.get('/api/itemName', (req, res, next) => {
+  console.log(req.query.itemCode);
+  let code = req.query.itemCode;
+  Item.find({itemCode:code})
+  .then((responseFromDB)=>{
+    res.json(responseFromDB);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
 module.exports = apiRouter;
