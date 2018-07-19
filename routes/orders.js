@@ -20,7 +20,8 @@ orderRouter.get('/orders/create', (req, res, next) => {
     Order.find().sort({orderNumber:-1}).limit(1)
     .then((resultFromDB)=>{
       let nextOrderNumber = 1;
-      if (nextOrderNumber < resultFromDB[0] ) {nextOrderNumber = Number(resultFromDB[0].orderNumber)+1};
+      let maxOrderNumberInDB = Number(resultFromDB[0].orderNumber);
+      if (nextOrderNumber <= maxOrderNumberInDB) {nextOrderNumber = maxOrderNumberInDB+1};
       res.render('orders/createOrder',{nextOrderNumber});
     })
     .catch((err)=>{
@@ -40,7 +41,7 @@ orderRouter.get('/orders/create', (req, res, next) => {
       lines: []
     };
 
-    for( let i = 0; i < req.body.itemCode.length; i++){
+    for( let i = 0; i < req.body.numberOfLines; i++){
       let line = {}
       line.itemCode = req.body.itemCode[i];
       line.itemName = req.body.itemName[i];
@@ -49,6 +50,8 @@ orderRouter.get('/orders/create', (req, res, next) => {
       line.lineTotal = req.body.lineTotal[i];
       order.lines.push(line);
     }
+
+    console.log(order);
 
   const newOrder  = new Order(order);
 

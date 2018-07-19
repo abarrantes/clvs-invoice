@@ -1,4 +1,6 @@
 
+const ItemsArray = [];
+
 $(document).ready(() => {
 
 
@@ -10,8 +12,6 @@ $(document).ready(() => {
     }
 
     $(document).on("click","button.btnAddLIne" , function() {
-        calculateLineTotal();
-        calculateDocTotal();
         addLineHtml(calculateNextID(), $(this));
     });
 
@@ -48,18 +48,44 @@ $(document).ready(() => {
         });
 
         $("#total").val(docTotal);
-        return docTotal;
+        $("#numberOfLines").val($('.orderLines').length);
     }
 
     function deleteLineHtml(clickedBtn) {
-
         if ($('.orderLines').length === 1) {
             alert("the order needs at least one line");
             return;
         }
-
         clickedBtn.parent().parent().prev().remove();
         clickedBtn.parent().parent().remove();
+    }
+
+    //NOT USING THIS. ITS FOR TESTS. 
+    // $(document).on("click","button.btnTestApi" , function() {
+    //     getItems();
+    // });
+
+     
+    $(document).on("mouseenter",".itemDropdown",function(){
+        fillItems($(this));
+    })
+    
+    function fillItems($selectNode){
+        axios.get('/api/items')
+        .then((response)=>{
+            ItemsArray.splice(0)
+            response.data.forEach(element => {
+                ItemsArray.push(element);
+            });
+            $selectNode.children().remove();
+            ItemsArray.forEach(element => {
+                
+                $selectNode.append(`<option>${element.itemCode}</option>`);
+            });
+        })
+        .catch((err)=>{
+            console.log("error en getItems",err);
+        })
     }
 
     function addLineHtml(id, clickedBtn) {
@@ -69,7 +95,9 @@ $(document).ready(() => {
         <div id="${id}" class="d-flex justify-content-between orderLines">
         
         <div>
-        <input type="text" class="form-control" id="itemCode${id}" name="itemCode" placeholder="itemCode">
+        <select class="form-control itemDropdown" id="itemCode${id}" name="itemCode">
+        <option></option>
+        </select>
         </div>
         <div>
         <input type="text" class="form-control" id="itemName${id}" name="itemName" placeholder="itemName">

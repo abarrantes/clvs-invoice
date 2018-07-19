@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const Customer = require('../models/customer');
 
 // it was needed because app.js is not related to this seeds.js file, we run it independently with node bin/seeds.js
-const dbName = 'clvs-invoice'
-mongoose.connect(`${process.env.MONGODB_URI}/${dbName}`);
+mongoose.connect(process.env.MONGODB_URI);
 
 const customers = [
   {

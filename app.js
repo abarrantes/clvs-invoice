@@ -21,7 +21,7 @@ const MongoStore      = require("connect-mongo")(session);
 const flash           = require("connect-flash");
 
 // needed for serializing and deserializing passwords
-const User        = require ("./models/user");
+const User            = require ("./models/user");
 
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true})
@@ -116,6 +116,9 @@ app.use('/', orderRoutes);
 
 const itemRoutes = require('./routes/items');
 app.use('/', itemRoutes);
+
+const apiRoutes = require('./routes/api');
+app.use('/', apiRoutes);
 
 const customerRoutes = require('./routes/customers');
 app.use('/', customerRoutes);
