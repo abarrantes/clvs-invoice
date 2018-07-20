@@ -47,28 +47,26 @@ $(document).ready(() => {
         $("#numberOfLines").val($('.orderLines').length);
     }
 
-    //this function 
-    function deleteLineHtml(clickedBtn) {
-        if ($('.orderLines').length === 1) {
-            alert("the order needs at least one line");
-            return;
-        }
-        clickedBtn.parent().parent().prev().remove();
-        clickedBtn.parent().parent().remove();
-    }
 
     //NOT USING THIS. ITS FOR TESTS. 
     // $(document).on("click", "button.btnTestApi", function () {
 
     // });
     
+
+
+    //The next two formulas fill the item name based on the itemcode selected
     $(document).on("mouseleave", ".itemDropdown", function () {
         getItemName($(this));
     })
-    
-    function getItemName($item){
+
+    function getItemName($item) {
         let itemCode = $item.val();
-        axios.get('/api/itemName',{params:{itemCode}})
+        axios.get('/api/itemName', {
+                params: {
+                    itemCode
+                }
+            })
             .then((response) => {
                 $item.parent().parent().find("input[name='itemName']").val(response.data[0].itemName);
             })
@@ -77,6 +75,8 @@ $(document).ready(() => {
             })
     }
 
+    //The next two formulas fill the itemcode dropdown with all the available item codes
+    //toto: filter if item is not active status
     $(document).on("mouseenter", ".itemDropdown", function () {
         fillItems($(this));
     })
@@ -98,8 +98,18 @@ $(document).ready(() => {
             })
     }
 
-    function addLineHtml(id, clickedBtn) {
+    //this function deletes de rows but prevents deletion if only one row left
+    function deleteLineHtml(clickedBtn) {
+        if ($('.orderLines').length === 1) {
+            alert("the order needs at least one line");
+            return;
+        }
+        clickedBtn.parent().parent().prev().remove();
+        clickedBtn.parent().parent().remove();
+    }
 
+    //this function adds a row and assigns the correct id to the different elements
+    function addLineHtml(id, clickedBtn) {
         let line =
             `<hr>
         <div id="${id}" class="d-flex justify-content-between orderLines">
