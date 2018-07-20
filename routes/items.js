@@ -1,6 +1,6 @@
 const express           = require('express');
 const itemRouter        = express.Router();
-const Item             = require('../models/item');
+const Item              = require('../models/item');
 
 //Get items START
 itemRouter.get('/items/list', (req, res, next) => {
@@ -28,11 +28,11 @@ itemRouter.post('/items/create', (req, res, next) => {
       res.redirect('/items/list');
     })
     .catch((err) => {
-     next(err)
+     next(err) //TODO: I want to figure out how to manage the error and send it to user.
     });
 
 }); //ends the route
 
-  //Create users END
+  //Create items END
 
 module.exports = itemRouter;
