@@ -1,8 +1,9 @@
 const express     = require('express');
 const apiRouter   = express.Router();
 const Item        = require('../models/item');
+const Customer    = require('../models/customer');
 
-/* GET home page */
+
 apiRouter.get('/api/items', (req, res, next) => {
   Item.find().sort({itemCode:1})
   .then((responseFromDB)=>{
@@ -14,11 +15,76 @@ apiRouter.get('/api/items', (req, res, next) => {
 });
 
 apiRouter.get('/api/itemName', (req, res, next) => {
-  console.log(req.query.itemCode);
   let code = req.query.itemCode;
   Item.find({itemCode:code})
   .then((responseFromDB)=>{
     res.json(responseFromDB);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
+apiRouter.get('/api/customers', (req, res, next) => {
+  Customer.find().sort({cardCode:1})
+  .then((responseFromDB)=>{
+    res.json(responseFromDB);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
+apiRouter.get('/api/cardName', (req, res, next) => {
+  let code = req.query.cardCode;
+  Customer.find({cardCode:code})
+  .then((responseFromDB)=>{
+    res.json(responseFromDB);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
+apiRouter.patch('/api/deactivateItem', (req, res, next) => {
+  let code = req.body.params.itemCode;
+  Item.findOneAndUpdate({itemCode:code},{active:false})
+  .then((response)=>{
+    console.log("-----------response from update:",response);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
+apiRouter.patch('/api/activateItem', (req, res, next) => {
+  let code = req.body.params.itemCode;
+  Item.findOneAndUpdate({itemCode:code},{active:true})
+  .then((response)=>{
+    console.log("-----------response from update:",response);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
+apiRouter.patch('/api/deactivateCustomer', (req, res, next) => {
+  let code = req.body.params.cardCode;
+  console.log("----------code: ",code);
+  Customer.findOneAndUpdate({cardCode:code},{active:false})
+  .then((response)=>{
+    console.log("-----------response from update:",response);
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
+apiRouter.patch('/api/activateCustomer', (req, res, next) => {
+  let code = req.body.params.cardCode;
+  Customer.findOneAndUpdate({cardCode:code},{active:true})
+  .then((response)=>{
+    console.log("-----------response from update:",response);
   })
   .catch((err)=>{
     next(err);

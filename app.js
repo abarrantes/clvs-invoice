@@ -69,7 +69,7 @@ app.use(
 
 //todo: need to figure how this works
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'clvs-invoice';
 
 passport.serializeUser((user, cb) => {
   cb(null, user._id);

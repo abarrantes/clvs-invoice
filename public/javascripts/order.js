@@ -1,4 +1,5 @@
-const ItemsArray = [];
+const itemsArray = [];
+const customersArray = [];
 var nextID = 0;
 
 //All the functions are inside this function
@@ -52,8 +53,73 @@ $(document).ready(() => {
     // $(document).on("click", "button.btnTestApi", function () {
 
     // });
-    
 
+    //The next two formulas fill the customerCode dropdown with all the available customer codes
+    //toto: filter if item is not active status
+    $(document).on("mouseenter", ".customerDropdown", function () {
+        fillCustomers($(this));
+    })
+
+    function fillCustomers($selectNode) {
+        axios.get('/api/customers')
+            .then((response) => {
+                customersArray.splice(0)
+                response.data.forEach(element => {
+                    customersArray.push(element);
+                });
+                $selectNode.children().remove();
+                customersArray.forEach(element => {
+                    $selectNode.append(`<option>${element.cardCode}</option>`);
+                });
+            })
+            .catch((err) => {
+                console.log("error en fillCustomers", err);
+            })
+    }
+
+    //TEMPLATE FOR CUSTOMER The next two formulas fill the item name based on the itemcode selected
+    $(document).on("mouseleave", ".customerDropdown", function () {
+        getCustomerName($(this));
+    })
+
+    function getCustomerName($card) {
+        let cardCode = $card.val();
+        axios.get('/api/cardName', {
+                params: {
+                    cardCode
+                }
+            })
+            .then((response) => {
+                $("#cardName").val(response.data[0].cardName);
+            })
+            .catch((err) => {
+                console.log("error en getCustomerName", err);
+            })
+    }
+
+
+    //The next two formulas fill the itemcode dropdown with all the available item codes
+    //toto: filter if item is not active status
+    $(document).on("mouseenter", ".itemDropdown", function () {
+        fillItems($(this));
+    })
+
+    function fillItems($selectNode) {
+        axios.get('/api/items')
+            .then((response) => {
+                itemsArray.splice(0)
+                response.data.forEach(element => {
+                    itemsArray.push(element);
+                });
+                $selectNode.children().remove();
+                itemsArray.forEach(element => {
+                    $selectNode.append(`<option>${element.itemCode}</option>`);
+                });
+            })
+            .catch((err) => {
+                console.log("error en fillItems", err);
+            })
+    }
 
     //The next two formulas fill the item name based on the itemcode selected
     $(document).on("mouseleave", ".itemDropdown", function () {
@@ -71,30 +137,7 @@ $(document).ready(() => {
                 $item.parent().parent().find("input[name='itemName']").val(response.data[0].itemName);
             })
             .catch((err) => {
-                console.log("error en getItems", err);
-            })
-    }
-
-    //The next two formulas fill the itemcode dropdown with all the available item codes
-    //toto: filter if item is not active status
-    $(document).on("mouseenter", ".itemDropdown", function () {
-        fillItems($(this));
-    })
-
-    function fillItems($selectNode) {
-        axios.get('/api/items')
-            .then((response) => {
-                ItemsArray.splice(0)
-                response.data.forEach(element => {
-                    ItemsArray.push(element);
-                });
-                $selectNode.children().remove();
-                ItemsArray.forEach(element => {
-                    $selectNode.append(`<option>${element.itemCode}</option>`);
-                });
-            })
-            .catch((err) => {
-                console.log("error en getItems", err);
+                console.log("error en getItemName", err);
             })
     }
 
