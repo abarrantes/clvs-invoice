@@ -13,24 +13,19 @@ a {
 .login-row {
   padding-top: 10vh; }
 
-.login-form {
-  border: 2px rgba(57, 159, 241, 0.849) solid;
-  border-radius: 3px;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
 form {
   padding-left: 50px;
   padding-right: 50px; }
 
 form.masters {
-  padding-left: 250px;
-  padding-right: 250px; }
+  padding-left: 200px;
+  padding-right: 200px; }
 
 div {
   min-width: 200px; }
+
+div.user {
+  min-width: 300px; }
 
 hr {
   margin: 5px; }
