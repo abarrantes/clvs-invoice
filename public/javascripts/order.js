@@ -48,12 +48,6 @@ $(document).ready(() => {
         $("#numberOfLines").val($('.orderLines').length);
     }
 
-
-    //NOT USING THIS. ITS FOR TESTS. 
-    // $(document).on("click", "button.btnTestApi", function () {
-
-    // });
-
     //The next two formulas fill the customerCode dropdown with all the available customer codes
     //toto: filter if item is not active status
     $(document).on("mouseenter", ".customerDropdown", function () {
@@ -97,7 +91,6 @@ $(document).ready(() => {
             })
     }
 
-
     //The next two formulas fill the itemcode dropdown with all the available item codes
     //toto: filter if item is not active status
     $(document).on("mouseenter", ".itemDropdown", function () {
@@ -117,7 +110,7 @@ $(document).ready(() => {
                 });
             })
             .catch((err) => {
-                console.log("error en fillItems", err);
+                console.log("error in fillItems", err);
             })
     }
 
