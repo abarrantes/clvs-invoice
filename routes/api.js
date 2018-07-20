@@ -5,7 +5,7 @@ const Customer    = require('../models/customer');
 
 
 apiRouter.get('/api/items', (req, res, next) => {
-  Item.find().sort({itemCode:1})
+  Item.find({active:true}).sort({itemCode:1})
   .then((responseFromDB)=>{
     res.json(responseFromDB);
   })
@@ -26,7 +26,7 @@ apiRouter.get('/api/itemName', (req, res, next) => {
 });
 
 apiRouter.get('/api/customers', (req, res, next) => {
-  Customer.find().sort({cardCode:1})
+  Customer.find({active:true}).sort({cardCode:1})
   .then((responseFromDB)=>{
     res.json(responseFromDB);
   })
